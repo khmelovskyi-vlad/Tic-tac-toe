@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Tic_tac_toe_api.Models.EntityFramework;
 
 namespace Tic_tac_toe_api.Controllers
 {
+    [EnableCors("_myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class PlayerController : ControllerBase

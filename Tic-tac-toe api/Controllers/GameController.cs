@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using Tic_tac_toe_api.Models.EntityFramework;
 
 namespace Tic_tac_toe_api.Controllers
 {
+    [EnableCors("_myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class GameController : ControllerBase
@@ -28,7 +30,6 @@ namespace Tic_tac_toe_api.Controllers
         //        //.Select(x => ItemToDTO(x))
         //        .ToListAsync();
         //}
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Game>> GetGame(Guid id)
         {
@@ -71,12 +72,12 @@ namespace Tic_tac_toe_api.Controllers
 
         //    return NoContent();
         //}
-        public class GamePrototype
-        {
-            public int LinesCount { get; set; }
-            public int WinLine { get; set; }
-            public DateTime GameTime { get; set; }
-        }
+        //public class GamePrototype
+        //{
+        //    public int LinesCount { get; set; }
+        //    public int WinLine { get; set; }
+        //    public DateTime GameTime { get; set; }
+        //}
         [HttpPost]
         public async Task<Guid> CreateGame(Game game)
         {

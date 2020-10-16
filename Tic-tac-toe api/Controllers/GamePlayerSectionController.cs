@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Tic_tac_toe_api.Data;
+using Tic_tac_toe_api.Models;
 using Tic_tac_toe_api.Models.EntityFramework;
 
 namespace Tic_tac_toe_api.Controllers
 {
+    [EnableCors("_myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class GamePlayerSectionController : ControllerBase
@@ -20,12 +23,6 @@ namespace Tic_tac_toe_api.Controllers
         public GamePlayerSectionController(Tic_tac_toeContext context)
         {
             _context = context;
-        }
-        public class SectionPrototype
-        {
-            public int XCoordinate { get; set; }
-            public int YCoordinate { get; set; }
-            public Guid GamePlayerId { get; set; }
         }
         [HttpPost]
         public async Task<bool> CreateGamePlayerSections(object sectionSectionPrototypesObj)
