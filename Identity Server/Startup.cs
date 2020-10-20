@@ -52,6 +52,12 @@ namespace Identity_Server
                 options.LogoutPath = $"/Identity/Account/Logout";
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
+            services.AddAuthorization(opts => {
+                opts.AddPolicy("ManageAllRoles", policy => {
+                    policy.RequireRole("MainAdmin");
+                    policy.RequireClaim("Permission", "ManageAllRoles");
+                });
+            });
         }
         public class EmailSender : IEmailSender
         {
@@ -81,7 +87,7 @@ namespace Identity_Server
 
             app.UseRouting();
 
-            app.UseAuthentication();
+            app.UseIdentityServer();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

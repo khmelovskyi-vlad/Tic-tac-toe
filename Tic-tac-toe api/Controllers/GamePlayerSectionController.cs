@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ using Tic_tac_toe_api.Models.EntityFramework;
 
 namespace Tic_tac_toe_api.Controllers
 {
+    [Authorize]
     [EnableCors("_myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
