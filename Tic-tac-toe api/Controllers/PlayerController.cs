@@ -25,8 +25,11 @@ namespace Tic_tac_toe_api.Controllers
         [HttpPost]
         public async Task<ActionResult<Player>> CreatePlayer(Player player)
         {
-            _context.Players.Add(player);
-            await _context.SaveChangesAsync();
+            if ((await _context.Players.FindAsync(player.Id)) == null)
+            {
+                _context.Players.Add(player);
+                await _context.SaveChangesAsync();
+            }
 
             return CreatedAtAction(
                 nameof(GetPlayer), player.Id);

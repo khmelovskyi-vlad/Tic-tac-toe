@@ -35,14 +35,19 @@ namespace Tic_tac_toe_api
                 options.AddPolicy(name: MyCorsPolicy,
                                   builder =>
                                   {
-                                      builder.WithOrigins("http://127.0.0.1:5500")
+                                      builder.WithOrigins("http://127.0.0.1:5500", "http://127.0.0.1:5500/dist")
                                                   .AllowAnyHeader()
-                                                  .AllowAnyMethod();
+                                                  .AllowAnyMethod()
+                                                  .AllowCredentials();
                                   });
             });
             services.AddControllers();
             services.AddDbContext<Tic_tac_toeContext>(options => options.UseSqlServer(GetSqlConnectionStringBuilder().ConnectionString));
-            services.AddSignalR();
+            services.AddSignalR(hubOptions =>
+            {
+                hubOptions.EnableDetailedErrors = true;
+                hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(4);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,7 +62,7 @@ namespace Tic_tac_toe_api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(/*MyCorsPolicy*/);
+            app.UseCors(MyCorsPolicy);
 
             app.UseAuthorization();
 
