@@ -12,10 +12,10 @@ using Tic_tac_toe_api.Models.EntityFramework;
 
 namespace Tic_tac_toe_api.Controllers
 {
-    [Authorize]
-    [EnableCors("_myPolicy")]
+    //[EnableCors("_myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PlayerController : ControllerBase
     {
         private readonly Tic_tac_toeContext _context;
@@ -25,11 +25,11 @@ namespace Tic_tac_toe_api.Controllers
             _context = context;
         }
         [HttpPost]
-        public async Task<ActionResult<Player>> CreatePlayer(Player player)
+        public async Task<ActionResult<AspNetUser>> CreatePlayer(AspNetUser player)
         {
-            if ((await _context.Players.FindAsync(player.Id)) == null)
+            if ((await _context.AspNetUsers.FindAsync(player.Id)) == null)
             {
-                _context.Players.Add(player);
+                _context.AspNetUsers.Add(player);
                 await _context.SaveChangesAsync();
             }
 
@@ -38,9 +38,9 @@ namespace Tic_tac_toe_api.Controllers
         }
 
         [HttpGet/*("{id}")*/]
-        public async Task<ActionResult<Player>> GetPlayer(string id)
+        public async Task<ActionResult<AspNetUser>> GetPlayer(string id)
         {
-            var player = await _context.Players.FindAsync(id);
+            var player = await _context.AspNetUsers.FindAsync(id);
 
             if (player == null)
             {

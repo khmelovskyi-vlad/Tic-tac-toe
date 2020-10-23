@@ -15,20 +15,22 @@ namespace Identity_Server
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                //new IdentityResource("permissions", new string[] { "Permission" }),
+                //new IdentityResource("roles", new[] { "role" })
             };
         }
-        //public static IEnumerable<ApiScope> ApiScopes =>
-        //    new List<ApiScope>
-        //    {
-        //        new ApiScope("api1", "My API")
-        //    };
-        public static IEnumerable<ApiResource> GetApiResources()
-        {
-            return new List<ApiResource>
+        public static IEnumerable<ApiScope> ApiScopes =>
+            new List<ApiScope>
             {
-                new ApiResource("api1", "My API")
+                new ApiScope("api1", "My API")
             };
-        }
+        //public static IEnumerable<ApiResource> GetApiResources()
+        //{
+        //    return new List<ApiResource>
+        //    {
+        //        new ApiResource("api1", "My API")
+        //    };
+        //}
         public static IEnumerable<Client> GetClients()
         {
             return new List<Client>()
@@ -53,35 +55,96 @@ namespace Identity_Server
                 //},
                 new Client
                 {
-                    ClientId = "mvc",
-                    //ClientName = "MVC Client",
-                    //AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
-                    AllowedGrantTypes = GrantTypes.Hybrid,
-                    AllowOfflineAccess = true,
+                    ClientId = "js",
+                    ClientName = "JavaScript Client",
+                    //AllowedGrantTypes = GrantTypes.Code,
+                    RequireClientSecret = false,
+                    AllowedGrantTypes = GrantTypes.Implicit,
                     RequirePkce = false,
+                    AllowAccessTokensViaBrowser = true,
+                    AlwaysIncludeUserClaimsInIdToken = true,
 
-                    RequireConsent = false,
+                    //RedirectUris =           { "https://localhost:5003/callback.html" },
+                    //RedirectUris =           { "https://localhost:5003/index.html" },
+                    //PostLogoutRedirectUris = { "https://localhost:5003/index.html" },
+                    //AllowedCorsOrigins =     { "https://localhost:5003" },
+                    RedirectUris = { "http://127.0.0.1:5500/dist" },
+                    PostLogoutRedirectUris = { "http://127.0.0.1:5500/dist" },
+                    AllowedCorsOrigins = { "http://127.0.0.1:5500" },
 
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
-                
-                    // where to redirect to after login
-                    RedirectUris = { "https://localhost:44392/signin-oidc" },
-                    //RedirectUris = { "http://localhost:44392/signin-oidc" },
-                    // where to redirect to after logout
-                    PostLogoutRedirectUris = { "https://localhost:44392/signout-callback-oidc" },
-                    //RedirectUris           = { "http://localhost:44392/signin-oidc" },
-                    //PostLogoutRedirectUris = { "http://localhost:44392/signout-callback-oidc" },
-                
-                    AllowedScopes = new List<string>
+                    AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        //"api1"
+                        //"roles",
+                        "api1",
+                        //"permissions"
                     }
-                }
+                },
+                //new Client
+                //{
+                //    ClientId = "js",
+                //    ClientName = "JavaScript Client",
+                //    AllowedGrantTypes = GrantTypes.Code,
+                //    RequireClientSecret = false,
+                
+                //    RedirectUris =           { "http://127.0.0.1:5500/dist/callback.html" },
+                //    PostLogoutRedirectUris = { "http://127.0.0.1:5500/dist/index.html" },
+                //    AllowedCorsOrigins =     { "http://127.0.0.1:5500/dist" },
+                
+                //    AllowedScopes =
+                //    {
+                //        IdentityServerConstants.StandardScopes.OpenId,
+                //        IdentityServerConstants.StandardScopes.Profile,
+                //        "api1"
+                //    }
+                //},
+                //new Client
+                //{
+                //    ClientId = "mvc",
+                //    ClientSecrets = { new Secret("secret".Sha256()) },
+
+                //    AllowedGrantTypes = GrantTypes.Code,
+
+                //    RedirectUris = { "https://localhost:44392/signin-oidc" },
+
+                //    PostLogoutRedirectUris = { "https://localhost:44392/signout-callback-oidc" },
+
+                //    AllowOfflineAccess = true,
+
+                //    AllowedScopes = new List<string>
+                //    {
+                //        IdentityServerConstants.StandardScopes.OpenId,
+                //        IdentityServerConstants.StandardScopes.Profile,
+                //        "api1"
+                //    }
+                //},
+                //new Client
+                //{
+                //    ClientId = "mvc",
+                //    AllowedGrantTypes = GrantTypes.Hybrid,
+                //    AllowOfflineAccess = true,
+                //    RequirePkce = false,
+
+                //    RequireConsent = false,
+
+                //    ClientSecrets =
+                //    {
+                //        new Secret("secret".Sha256())
+                //    },
+                
+
+                //    RedirectUris = { "https://localhost:44392/signin-oidc" },
+
+                //    PostLogoutRedirectUris = { "https://localhost:44392/signout-callback-oidc" },
+                
+                //    AllowedScopes = new List<string>
+                //    {
+                //        IdentityServerConstants.StandardScopes.OpenId,
+                //        IdentityServerConstants.StandardScopes.Profile,
+                //        //"api1"
+                //    }
+                //}
             };
         }
     }

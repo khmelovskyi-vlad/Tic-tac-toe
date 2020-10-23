@@ -16,7 +16,7 @@ namespace Tic_tac_toe_api.Data
         }
 
         public DbSet<Game> Games { get; set; }
-        public DbSet<Player> Players { get; set; }
+        public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<GamePlayer> GamePlayers { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<GamePlayerSection> GamePlayerSections { get; set; }
@@ -32,6 +32,11 @@ namespace Tic_tac_toe_api.Data
                 .HasConversion(converter);
             modelBuilder.Entity<GamePlayerSection>()
                 .HasKey(gp => new { gp.GamePlayerId, gp.SectionId });
+            //modelBuilder.Entity<GamePlayer>()
+            //    .HasOne(gp => gp.Student)
+            //    .WithMany(s => s.Scores)
+            //    .HasForeignKey(s => s.StudentId)
+            //    .OnDelete(DeleteBehavior.NoAction);
             modelBuilder.Seed(new Initializer());
 
         }

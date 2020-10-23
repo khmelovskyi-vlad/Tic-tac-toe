@@ -12,10 +12,10 @@ using Tic_tac_toe_api.Models.EntityFramework;
 
 namespace Tic_tac_toe_api.Controllers
 {
-    [Authorize]
-    [EnableCors("_myPolicy")]
+    //[EnableCors("_myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GamePlayerController : ControllerBase
     {
         private readonly Tic_tac_toeContext _context;
@@ -32,7 +32,7 @@ namespace Tic_tac_toe_api.Controllers
                 Id = Guid.NewGuid(),
                 Figure = gamePlayerPrototype.Figure == "x" ? FigureType.x : FigureType.o,
                 IsWon = gamePlayerPrototype.IsWon,
-                PlayerId = gamePlayerPrototype.PlayerId,
+                AspNetUserId = gamePlayerPrototype.PlayerId,
                 GameId = gamePlayerPrototype.GameId
             };
             _context.GamePlayers.Add(gamePlayer);

@@ -12,10 +12,10 @@ using Tic_tac_toe_api.Models;
 
 namespace Tic_tac_toe_api.Controllers
 {
-    [Authorize]
-    [EnableCors("_myPolicy")]
+    //[EnableCors("_myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class PlayerMatchesController : ControllerBase
     {
         private readonly Tic_tac_toeContext _context;
@@ -27,7 +27,7 @@ namespace Tic_tac_toe_api.Controllers
         [HttpGet]
         public async Task<PlayerMatches[]> GetPlayerMatches()
         {
-            var result = (await _context.Players
+            var result = (await _context.AspNetUsers
                 .OrderByDescending(player => player.GamePlayers.Where(gamePlayer => gamePlayer.IsWon).Count())
                 .Take(10)
                 .Select(player => new PlayerMatches()

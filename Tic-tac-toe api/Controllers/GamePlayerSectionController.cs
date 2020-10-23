@@ -14,10 +14,10 @@ using Tic_tac_toe_api.Models.EntityFramework;
 
 namespace Tic_tac_toe_api.Controllers
 {
-    [Authorize]
-    [EnableCors("_myPolicy")]
+    //[EnableCors("_myPolicy")]
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class GamePlayerSectionController : ControllerBase
     {
         private readonly Tic_tac_toeContext _context;

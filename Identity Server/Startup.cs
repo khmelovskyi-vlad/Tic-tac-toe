@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.Data.SqlClient;
 
 namespace Identity_Server
 {
@@ -30,7 +31,7 @@ namespace Identity_Server
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    GetSqlConnectionStringBuilder().ConnectionString));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -40,10 +41,20 @@ namespace Identity_Server
             services.AddRazorPages();
 
             services.AddSingleton<IEmailSender, EmailSender>();
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+
+                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
+                options.EmitStaticAudienceClaim = true;
+            })
                 .AddDeveloperSigningCredential() // not recommended for production - you need to store your key material somewhere secure
                 .AddInMemoryPersistedGrants() // do
                 .AddInMemoryIdentityResources(Config.GetIdentityResources())
+                .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.GetClients())
                 .AddAspNetIdentity<IdentityUser>();
             services.ConfigureApplicationCookie(options =>
@@ -97,6 +108,15 @@ namespace Identity_Server
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+        }
+        private SqlConnectionStringBuilder GetSqlConnectionStringBuilder()
+        {
+            SqlConnectionStringBuilder sqlConnectionStringBuilder = new SqlConnectionStringBuilder();
+            sqlConnectionStringBuilder.DataSource = "WIN-DHV0BQSLTCR";
+            sqlConnectionStringBuilder.UserID = "SQLFirst";
+            sqlConnectionStringBuilder.Password = "Test1234";
+            sqlConnectionStringBuilder.InitialCatalog = "Tic_tac_toe";
+            return sqlConnectionStringBuilder;
         }
     }
 }

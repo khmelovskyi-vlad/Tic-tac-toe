@@ -8,6 +8,17 @@ namespace Identity_Server.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_GamePlayers_AspNetUsers_AspNetUserId",
+                table: "GamePlayers");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropIndex(
+                name: "IX_GamePlayers_AspNetUserId",
+                table: "GamePlayers");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -21,7 +32,6 @@ namespace Identity_Server.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
-
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
                 columns: table => new
@@ -191,10 +201,34 @@ namespace Identity_Server.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GamePlayers_AspNetUserId",
+                table: "GamePlayers",
+                column: "AspNetUserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_GamePlayers_AspNetUsers_AspNetUserId",
+                table: "GamePlayers",
+                column: "AspNetUserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_GamePlayers_AspNetUsers_AspNetUserId",
+                table: "GamePlayers");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropIndex(
+                name: "IX_GamePlayers_AspNetUserId",
+                table: "GamePlayers");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -215,6 +249,19 @@ namespace Identity_Server.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GamePlayers_AspNetUserId",
+                table: "GamePlayers",
+                column: "AspNetUserId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_GamePlayers_AspNetUsers_AspNetUserId",
+                table: "GamePlayers",
+                column: "AspNetUserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
     }
 }
