@@ -133,7 +133,7 @@ namespace Tic_tac_toe_api
                                   {
                                       builder
                                                   .WithOrigins("http://127.0.0.1:5500", "http://127.0.0.1:5500/dist", 
-                                                  "https://localhost:5003", "https://localhost:5001")
+                                                  "https://localhost:5003", "https://localhost:5001", "http://localhost:3000")
                                                   //.AllowAnyOrigin()
                                                   .AllowAnyHeader()
                                                   .AllowAnyMethod()

@@ -68,9 +68,20 @@ namespace Identity_Server
                     //RedirectUris =           { "https://localhost:5003/index.html" },
                     //PostLogoutRedirectUris = { "https://localhost:5003/index.html" },
                     //AllowedCorsOrigins =     { "https://localhost:5003" },
-                    RedirectUris = { "http://127.0.0.1:5500/dist" },
-                    PostLogoutRedirectUris = { "http://127.0.0.1:5500/dist" },
-                    AllowedCorsOrigins = { "http://127.0.0.1:5500" },
+                    //RedirectUris = { "http://localhost:3000" },
+                    //RedirectUris = { "http://localhost:3000/signin-oidc" },
+
+
+
+                    RedirectUris = { "http://localhost:3000/callback.html" },
+                    PostLogoutRedirectUris = { "http://localhost:3000" },
+                    AllowedCorsOrigins =     { "http://localhost:3000" },
+
+
+
+                    //RedirectUris = { "http://127.0.0.1:5500/dist" },
+                    //PostLogoutRedirectUris = { "http://127.0.0.1:5500/dist" },
+                    //AllowedCorsOrigins = { "http://127.0.0.1:5500" },
 
                     AllowedScopes =
                     {
